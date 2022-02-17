@@ -1,18 +1,21 @@
 # gateways-app
+Note: 
+I made this application keeping in mind that it is a test and not a real life situation, that is why development tools were used (like json-server), which are not recommended for a production environment.
 
 ## Project setup
 ```
+node -> 12.14.1
 npm install
 ```
 
-### Compiles and hot-reloads for development
+### Run the fakeBackend 
 ```
-npm run serve
+npm run fakeBackend
 ```
 
-### Compiles and minifies for production
+### Run the app 
 ```
-npm run build
+npm run serve
 ```
 
 ### Lints and fixes files
