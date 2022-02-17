@@ -1,18 +1,29 @@
 <template>
   <div class="home">
-    <img alt="Vue logo" src="../assets/logo.png">
-    <HelloWorld msg="Welcome to Your Vue.js App"/>
+    <el-divider>
+      <img alt="Vue logo" style="width: 80%"  src="../assets/logo.png" />
+    </el-divider>
+    <br>
+    <br>
+    <br>
+    <h1>Welcome to Gateways manager app</h1>
+    <DashboardGraph class="mainLogo" />
   </div>
 </template>
 
 <script>
 // @ is an alias to /src
-import HelloWorld from '@/components/HelloWorld.vue'
+import DashboardGraph from "@/components/DashboardGraph.vue";
 
 export default {
-  name: 'Home',
+  name: "Home",
   components: {
-    HelloWorld
-  }
-}
+    DashboardGraph,
+  },
+};
 </script>
+<style scoped>
+ .mainLogo {
+   padding-top: 1%;
+ }
+</style>
