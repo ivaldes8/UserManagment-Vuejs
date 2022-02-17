@@ -51,6 +51,7 @@
 <script>
 import { v4 as uuidv4 } from "uuid";
 import moment from "moment";
+import _ from 'lodash';
 export default {
   name: "DeviceEdit",
   data() {
@@ -58,6 +59,7 @@ export default {
       loading: false,
       gateways: [],
       form: {},
+      selectedGateway: null,
       rules: {
         vendor: [
           { required: true, message: "Please input a vendor", trigger: "blur" },
@@ -84,7 +86,7 @@ export default {
   methods: {
     async getGateways(){
       const res = await fetch(
-        `http://127.0.0.1:5000/gateways`
+        `http://127.0.0.1:5000/gateways?_embed=devices`
       );
       const data = await res.json();
       this.gateways = data
@@ -99,6 +101,13 @@ export default {
       this.toggleLoading();
     },
     async submitForm(formName) {
+      if(!this.validateCurrentGateway()){
+        return this.$notify.error({
+          title: 'Error',
+          message: 'This gateway cant have more than 10 devices'
+        });
+      }
+     
       this.$refs[formName].validate((valid) => {
         if (valid) {
           const data = {
@@ -117,7 +126,6 @@ export default {
     async sendData(data) {
       this.toggleLoading();
       if (this.$route.params.id !== "new") {
-        console.log("LOL");
         await fetch(`http://127.0.0.1:5000/devices/${this.$route.params.id}`, {
           method: "PUT",
           headers: {
@@ -139,6 +147,15 @@ export default {
       this.$router.push({
         name: "Devices",
       });
+    },
+    validateCurrentGateway(){
+      this.selectedGateway = _.filter(this.gateways, {'id': this.form.gatewayId})
+      if(this.selectedGateway[0].devices.length < 10){
+        return true
+      }
+      else {
+        return false
+      }
     },
     toggleLoading() {
       this.loading = !this.loading;
