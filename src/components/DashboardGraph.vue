@@ -53,7 +53,7 @@ export default {
       loading: false,
       gateways: [],
       option: {},
-      options2: {}
+      option2: {}
     };
   },
   mounted() {
