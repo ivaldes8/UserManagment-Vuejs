@@ -1,7 +1,8 @@
 <template>
   <div id="app">
     <el-menu
-      :default-active="activeIndex"
+      v-if="currentUser"
+      :default-active="$route.name"
       class="el-menu-demo"
       mode="horizontal"
       @select="handleSelect"
@@ -9,11 +10,18 @@
       <el-menu-item index="Home">
         <router-link to="/">Dashboard</router-link>
       </el-menu-item>
-      <el-menu-item index="Gateways">
-        <router-link to="/gateways">Gateways</router-link>
+      <el-menu-item index="Log">
+        <router-link to="/logs">Logs</router-link>
       </el-menu-item>
-      <el-menu-item index="Devices">
-        <router-link to="/devices">Devices</router-link>
+      <el-menu-item index="Users">
+        <router-link to="/users">Usuarios</router-link>
+      </el-menu-item>
+      
+      <el-menu-item class="float-right">
+        <el-button type="text" @click="logOut()">Logout</el-button>
+      </el-menu-item>
+      <el-menu-item index="Profile" class="float-right">
+        <router-link to="/profile">Perfil</router-link>
       </el-menu-item>
     </el-menu>
     <transition name="fade" mode="out-in">
@@ -26,8 +34,13 @@
 export default {
   data() {
     return {
-      activeIndex: null,
+      loggedIn: null,
     };
+  },
+  computed: {
+    currentUser() {
+      return this.$store.state.auth.user;
+    },
   },
   methods: {
     handleSelect(index) {
@@ -36,6 +49,10 @@ export default {
           name: index,
         });
       }
+    },
+    logOut() {
+      this.$store.dispatch("auth/logout");
+      this.$router.push("/login");
     },
   },
 };
@@ -122,5 +139,26 @@ a {
 }
 .clearfix:after {
   clear: both;
+}
+
+.el-col {
+  border-radius: 4px;
+}
+.bg-purple-dark {
+  background: #99a9bf;
+}
+.bg-purple {
+  background: #d3dce6;
+}
+.bg-purple-light {
+  background: #e5e9f2;
+}
+.grid-content {
+  border-radius: 4px;
+  min-height: 36px;
+}
+.row-bg {
+  padding: 10px 0;
+  background-color: #f9fafc;
 }
 </style>

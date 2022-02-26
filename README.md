@@ -8,11 +8,6 @@ node -> 12.14.1
 npm install
 ```
 
-### Run the fakeBackend 
-```
-npm run fakeBackend
-```
-
 ### Run the app 
 ```
 npm run serve

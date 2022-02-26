@@ -32,6 +32,7 @@ import {
 } from "echarts/components";
 import VChart, { THEME_KEY } from "vue-echarts";
 import _ from "lodash";
+import UserService from '../services/user.service'
 
 use([
   CanvasRenderer,
@@ -62,26 +63,25 @@ export default {
   methods: {
     async getGateways() {
       this.toggleLoading();
-      const res = await fetch(`http://127.0.0.1:5000/gateways?_embed=devices`);
-      const data = await res.json();
-      this.gateways = data;
-      console.log(this.gateways, 'GATEWAYS');
+      const res = await UserService.getUsers();
+      const data = await res;
+      this.users = data.data.data;
       this.toggleLoading();
       this.buildGraph1();
       this.buildGraph2();
     },
     buildGraph1() {
       let data = [];
-
-      this.gateways.map((item) => {
+      console.log(this.users, 'USers')
+      this.users.map((item) => {
         data.push({
-          value: item.devices.length,
-          name: item.ipv4,
+          value: item.actividades.length,
+          name: item.name,
         });
       });
       this.option = {
         title: {
-          text: "Devices by gateways",
+          text: "Acciones por Usuarios",
           left: "center",
         },
         tooltip: {
@@ -91,11 +91,11 @@ export default {
         legend: {
           orient: "vertical",
           left: "left",
-          data: _.map(this.gateways, "ipv4"),
+          data: _.map(this.users, "name"),
         },
         series: [
           {
-            name: "Gateways and devices",
+            name: "Actividad de los usuarios",
             type: "pie",
             radius: "55%",
             center: ["50%", "60%"],
@@ -113,19 +113,19 @@ export default {
     },
     buildGraph2(){
       let data = []
-      this.gateways.map((item) => {
+      this.users.map((item) => {
         data.push({
-          name: item.ipv4,
+          name: item.name,
           type: "line",
           smooth: true,
-          data: item.devices.map((item2, index) =>  {
-            return [item2.createdAt, index + 1 ];
+          data: item.actividades.map((item2, index) =>  {
+            return [item2.created_at, index + 1 ];
           }),
         })
       })
        this.option2 = {
         title: {
-          text: "Sum of the number of devices per gateway over time",
+          text: "Cantidad de actividades por usuarion en el tiempo",
           left: "center",
         },
         tooltip: {

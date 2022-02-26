@@ -6,7 +6,7 @@
     <br>
     <br>
     <br>
-    <h1>Welcome to Gateways manager app</h1>
+    <h1>Gestor de Usuarios</h1>
     <DashboardGraph class="mainLogo" />
   </div>
 </template>
@@ -19,6 +19,11 @@ export default {
   name: "Home",
   components: {
     DashboardGraph,
+  },
+  computed: {
+    currentUser() {
+      return this.$store.state.auth.user;
+    }
   },
 };
 </script>
