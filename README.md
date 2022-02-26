@@ -1,6 +1,6 @@
 # gateways-app
 Note: 
-I made this application keeping in mind that it is a test and not a real life situation, that is why development tools were used (like json-server), which are not recommended for a production environment.
+En la carpeta utils esta la configuracion de la conexion de la Api entre otros parametos / In the utils folder you will find the api Url configuration with othre conf parameters. 
 
 ## Project setup
 ```
